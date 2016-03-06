@@ -1,0 +1,27 @@
+{
+  "name": "cb-craft.net",
+  "version": "1.0.0",
+  "description": "The website for my professional Minecraft server",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michaelgira23/Cb-craft.net.git"
+  },
+  "keywords": [
+    "Cbcraft"
+  ],
+  "author": "Michael Gira",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/michaelgira23/Cb-craft.net/issues"
+  },
+  "homepage": "https://github.com/michaelgira23/Cb-craft.net#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "gamedig": "^0.2.24",
+    "socket.io": "^1.4.5"
+  }
+}

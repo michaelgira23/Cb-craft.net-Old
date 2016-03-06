@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        
+        <title>Cbcraft</title>
+        <link rel="icon" href="/images/server-icon.png">
+        
+        <meta name="keywords" content="Cbcraft, Ccoolboy">
+        <meta name="description" content="The website for my professional Minecraft server">
+        <meta name="author" content="Michael Gira">
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+        
+        <style>
+            @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800);
+            
+            * {
+                font-family: 'Open Sans', sans-serif;
+            }
+            
+            html, body {
+                height: 100%;
+            }
+            
+            body {
+                display: flex;
+                align-items: center;
+            }
+            
+            .online-users {
+                list-style: none;
+            }
+            
+            .online-users > li {
+                padding: 0.1em 0;
+            }
+            
+            .online-users > li > img {
+                width: 2em;
+            }
+            
+            .online-users >li > img:not(.fade-in) {
+                opacity: 0;
+            }
+            
+            .fade-in {
+                animation: fadein 0.2s;
+            }
+            
+            @keyframes fadein {
+                from { opacity: 0; }
+                to   { opacity: 1; }
+            }
+        </style>
+    </head>
+    <body>
+        
+        <div class="card col-xs-4 col-xs-offset-4">
+            <div class="card-block">
+                <h1 class="server-name card-title"></h1>
+                <h6 class="server-ip card-subtitle text-muted"></h6>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <h4>Players Online <small class="player-count"></small></h4>
+                    <ul class="online-users">
+                        <li>
+                            <img class="img-rounded" src="https://crafatar.com/avatars/Ccoolboy?overlay"> Ccoolboy
+                        </li>
+                        <li>
+                            <img class="img-rounded" src="https://crafatar.com/avatars/Numbah47?overlay"> Numbah47
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+        <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script>
+        <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+        <script>
+            var socket = io();
+            
+            var $serverName  = $('.server-name');
+            var $serverIp    = $('.server-ip');
+            var $playerCount = $('.player-count');
+            var $onlineUsers = $('.online-users');
+            
+            socket.on('status', function(status, updated) {
+                var server = status.status;
+                $serverName.text(server.query.host);
+                $serverIp.text(server.query.address + ':' + server.query.port);
+                
+                // Player count
+                
+                $playerCount.text(server.players.length + '/' + server.maxplayers);
+                
+                // Add users to list
+                
+                $onlineUsers.html('');
+                $.each(server.players, function(index, value) {
+                    var username = value.name;
+                    $onlineUsers.append('<li><img class="img-rounded" src="https://crafatar.com/avatars/' + username + '?overlay"> ' + username + '</li>');
+                });
+                
+                // Fade in users
+                
+                $onlineUsers.find('img').each(function(index) {
+                    $(this).delay(500 * index).queue(function(next) {
+                        $(this).addClass('fade-in');
+                        next();
+                    })
+                });
+            });
+        </script>
+    </body>
+</html>
