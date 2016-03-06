@@ -1,4 +1,4 @@
-var port = 419;
+var port = 1419;
 var minecraftIp = 'modpack.cb-craft.net'; // Cbcraft IP
 var pingInterval = 60; // In seconds
 
