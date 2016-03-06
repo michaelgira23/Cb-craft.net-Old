@@ -1,4 +1,4 @@
-var port = 420;
+var port = 421;
 var minecraftIp = 'modpack.cb-craft.net'; // Cbcraft IP
 var pingInterval = 60; // In seconds
 
@@ -37,5 +37,4 @@ setInterval(emitStatus, pingInterval* 1000);
 
 io.on('connection', function(socket) {
     socket.emit('status', currentStatus);
-    console.log(currentStatus.status);
 });
